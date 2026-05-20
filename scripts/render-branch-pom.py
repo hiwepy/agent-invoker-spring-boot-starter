@@ -182,6 +182,8 @@ def write_pom(*, boot_parent: str, java_version: str, version_prefix: str, use_r
 
 
 def render(branch: str) -> None:
+    if branch == "main":
+        branch = "3.3.x"
     if branch not in MATRIX:
         keys = ", ".join(sorted(MATRIX))
         raise SystemExit(f"unsupported branch: {branch}. Choose one of: {keys}")
