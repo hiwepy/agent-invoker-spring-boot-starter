@@ -7,23 +7,23 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.13</version>
+        <version>3.1.12</version>
         <relativePath/>
     </parent>
 
     <groupId>io.github.hiwepy</groupId>
     <artifactId>agent-invoker-spring-boot-starter</artifactId>
-    <version>3.3.x.20260520-SNAPSHOT</version>
+    <version>3.1.x.20260520-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>Spring Boot starter for AI Agent Invoker — multi-provider AI agent invocation</description>
+    <description>Spring Boot starter for AI Agent Invoker — multi-provider AI agent invocation (line 3.1.x; JDK 17)</description>
     <url>https://github.com/hiwepy/${project.artifactId}</url>
 
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <agent-invoker-java-sdk.version>3.3.x.20260520-SNAPSHOT</agent-invoker-java-sdk.version>
-        <openclaw-spring-boot-starter.version>3.3.x.20260520-SNAPSHOT</openclaw-spring-boot-starter.version>
+        <agent-invoker-java-sdk.version>3.1.x.20260520-SNAPSHOT</agent-invoker-java-sdk.version>
+        <openclaw-spring-boot-starter.version>3.1.x.20260520-SNAPSHOT</openclaw-spring-boot-starter.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     </properties>
 
@@ -46,7 +46,6 @@
             <artifactId>agent-invoker-java-sdk</artifactId>
             <version>${agent-invoker-java-sdk.version}</version>
         </dependency>
-        <!-- OpenClaw provider (optional — only needed when using OpenClaw) -->
         <dependency>
             <groupId>io.github.hiwepy</groupId>
             <artifactId>openclaw-spring-boot-starter</artifactId>
@@ -64,6 +63,31 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>2624322-release-6F6h6R</id>
+            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-release-6f6h6r</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <snapshotRepository>
+            <id>2624322-snapshot-3EoOv3</id>
+            <url>https://packages.aliyun.com/6927b116e6c3e0425dbdf60d/maven/2624322-snapshot-3eoov3</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
 
     <build>
         <plugins>
