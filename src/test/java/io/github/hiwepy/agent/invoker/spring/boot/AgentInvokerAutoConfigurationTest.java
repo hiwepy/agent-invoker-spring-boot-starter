@@ -1,6 +1,6 @@
 package io.github.hiwepy.agent.invoker.spring.boot;
 
-import io.github.hiwepy.agent.invoker.AiAgentInvokerRouter;
+import io.github.hiwepy.agent.invoker.AgentInvokerRouter;
 import io.github.hiwepy.agent.invoker.CallbackRouter;
 import org.junit.jupiter.api.Test;
 
@@ -10,14 +10,14 @@ class AgentInvokerAutoConfigurationTest {
 
     @Test
     void shouldCreateRouter() {
-        AiAgentInvokerRouter router = new AiAgentInvokerRouter();
+        AgentInvokerRouter router = new AgentInvokerRouter();
         assertNotNull(router);
         assertTrue(router.getInvokers().isEmpty());
     }
 
     @Test
     void shouldCreateCallbackRouter() {
-        AiAgentInvokerRouter invokerRouter = new AiAgentInvokerRouter();
+        AgentInvokerRouter invokerRouter = new AgentInvokerRouter();
         CallbackRouter callbackRouter = new CallbackRouter(invokerRouter);
         assertNotNull(callbackRouter);
     }
