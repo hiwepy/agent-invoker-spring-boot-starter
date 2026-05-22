@@ -4,7 +4,6 @@ import io.github.hiwepy.agent.invoker.AiAgentInvokerRouter;
 import io.github.hiwepy.agent.invoker.CallbackRouter;
 import io.github.hiwepy.agent.invoker.openclaw.OpenClawAiAgentInvoker;
 import io.github.hiwepy.openclaw.OpenClawClient;
-import io.github.hiwepy.openclaw.spring.boot.OpenClawAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -13,26 +12,35 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment;
 
 /**
  * Agent Invoker 自动配置。
  *
  * <p>注册 {@link AiAgentInvokerRouter}、{@link CallbackRouter}，
  * 并在 OpenClaw 可用时条件装配 {@link OpenClawAiAgentInvoker}。</p>
+ *
+ * <p>配置说明：{@code openclaw.*}（openclaw-spring-boot-starter）负责 Gateway 客户端；
+ * {@code agents.provider.*} 负责 invoker 路由与 adapter 行为。callback 基础 URL 可通过
+ * {@link AgentInvokerOpenClawConfigBridge} 从 {@code openclaw.callback-base-url} 桥接。</p>
  */
 @Configuration
 @ConditionalOnClass(AiAgentInvokerRouter.class)
 @EnableConfigurationProperties(AgentInvokerProperties.class)
 @ConditionalOnProperty(prefix = AgentInvokerProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
+@Import(AgentInvokerAutoConfiguration.OpenClawInvokerConfiguration.class)
 public class AgentInvokerAutoConfiguration {
 
     /**
-     * AI Agent 调用路由器 Bean。收集所有 AiAgentInvoker 实现。
+     * AI Agent 调用路由器 Bean。收集所有 AiAgentInvoker 实现，并应用 {@code agents.provider.default-provider}。
      */
     @Bean
     @ConditionalOnMissingBean
-    public AiAgentInvokerRouter aiAgentInvokerRouter() {
-        return new AiAgentInvokerRouter();
+    public AiAgentInvokerRouter aiAgentInvokerRouter(AgentInvokerProperties properties) {
+        AiAgentInvokerRouter router = new AiAgentInvokerRouter();
+        router.setDefaultProvider(properties.getDefaultProvider());
+        return router;
     }
 
     /**
@@ -49,32 +57,26 @@ public class AgentInvokerAutoConfiguration {
      */
     @Configuration
     @ConditionalOnClass(OpenClawClient.class)
-    @AutoConfigureAfter(OpenClawAutoConfiguration.class)
+    @AutoConfigureAfter(name = "com.github.hiwepy.openclaw.spring.boot.OpenClawAutoConfiguration")
     @ConditionalOnProperty(prefix = AgentInvokerProperties.PREFIX + ".openclaw", name = "enabled", havingValue = "true", matchIfMissing = true)
     static class OpenClawInvokerConfiguration {
 
+        /**
+         * 创建 OpenClaw adapter 并注册到 Router；callback 基础 URL 支持从 {@code openclaw.callback-base-url} 桥接。
+         */
         @Bean
         @ConditionalOnMissingBean
         @ConditionalOnBean(OpenClawClient.class)
         public OpenClawAiAgentInvoker openClawAiAgentInvoker(
                 OpenClawClient openClawClient,
-                AgentInvokerProperties properties) {
-            OpenClawAiAgentInvoker invoker = new OpenClawAiAgentInvoker(
-                    openClawClient,
-                    properties.getOpenclaw().getCallbackBaseUrl());
-            return invoker;
-        }
-
-        /**
-         * 将 OpenClaw adapter 注册到 Router。
-         */
-        @Bean
-        @ConditionalOnBean({OpenClawAiAgentInvoker.class, AiAgentInvokerRouter.class})
-        public Object registerOpenClawInvoker(
-                OpenClawAiAgentInvoker openClawInvoker,
+                AgentInvokerProperties properties,
+                Environment environment,
                 AiAgentInvokerRouter router) {
-            router.register(openClawInvoker);
-            return "openclawInvokerRegistered";
+            String callbackBaseUrl = AgentInvokerOpenClawConfigBridge.resolveCallbackBaseUrl(
+                    environment, properties);
+            OpenClawAiAgentInvoker invoker = new OpenClawAiAgentInvoker(openClawClient, callbackBaseUrl);
+            router.register(invoker);
+            return invoker;
         }
     }
 }

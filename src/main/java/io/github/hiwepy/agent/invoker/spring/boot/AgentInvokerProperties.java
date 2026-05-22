@@ -31,22 +31,35 @@ public class AgentInvokerProperties {
 
     /**
      * OpenClaw Provider 专属配置（{@code agents.provider.openclaw.*}）。
+     *
+     * <p>Gateway 连接与 Hook 鉴权请配置 {@code openclaw.*}（由 openclaw-spring-boot-starter 装配
+     * {@link io.github.hiwepy.openclaw.OpenClawClient}）。本段 {@code gatewayBaseUrl} / {@code hooksToken}
+     * 等字段保留用于文档与迁移，adapter 运行时以 {@code openclaw.*} 为准；{@code callbackBaseUrl}
+     * 可通过 {@link AgentInvokerOpenClawConfigBridge} 从 {@code openclaw.callback-base-url} 桥接。</p>
      */
     public static class OpenClaw {
 
         /** 是否启用 OpenClaw adapter */
         private boolean enabled = true;
 
-        /** OpenClaw Gateway 根地址 */
+        /**
+         * OpenClaw Gateway 根地址（文档/迁移用；实际 {@link io.github.hiwepy.openclaw.OpenClawClient} 使用 {@code openclaw.gateway-base-url}）。
+         */
         private String gatewayBaseUrl = "http://localhost:18789";
 
-        /** Webhook 鉴权 token，与 Gateway hooks.token 一致 */
+        /**
+         * Webhook 鉴权 token（文档/迁移用；实际客户端使用 {@code openclaw.hooks-token}）。
+         */
         private String hooksToken;
 
-        /** API 密钥（hooksToken 未设置时的兜底） */
+        /**
+         * API 密钥（文档/迁移用；实际客户端使用 {@code openclaw.api-key}）。
+         */
         private String apiKey;
 
-        /** 回调基础 URL */
+        /**
+         * 回调基础 URL；未显式设置 {@code agents.provider.openclaw.callback-base-url} 时回退 {@code openclaw.callback-base-url}。
+         */
         private String callbackBaseUrl = "http://localhost:7088";
 
         /** 传输方式：http 或 mq */
