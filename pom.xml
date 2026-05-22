@@ -13,7 +13,7 @@
 
     <groupId>io.github.hiwepy</groupId>
     <artifactId>agent-invoker-spring-boot-starter</artifactId>
-    <version>3.0.x.20260520-SNAPSHOT</version>
+    <version>3.0.x.20260522-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Spring Boot starter for AI Agent Invoker — multi-provider AI agent invocation (line 3.0.x; JDK 17)</description>
@@ -22,8 +22,8 @@
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <agent-invoker-java-sdk.version>3.0.x.20260520-SNAPSHOT</agent-invoker-java-sdk.version>
-        <openclaw-spring-boot-starter.version>3.0.x.20260520-SNAPSHOT</openclaw-spring-boot-starter.version>
+        <agent-invoker-java-sdk.version>3.0.x.20260522-SNAPSHOT</agent-invoker-java-sdk.version>
+        <openclaw-spring-boot-starter.version>3.0.x.20260522-SNAPSHOT</openclaw-spring-boot-starter.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     </properties>
 
