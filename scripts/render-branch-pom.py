@@ -19,14 +19,16 @@ from datetime import date
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 POM = ROOT / "pom.xml"
 
-def _snapshot_suffix() -> str:
-    """{YYYYMMDD}-SNAPSHOT；日期来自 RELEASE_DATE 或当天。"""
+def version_date_suffix() -> str:
+    """SNAPSHOT: {date}-SNAPSHOT；RELEASE(RELEASE=1): 仅 {date}。"""
     raw = os.environ.get("RELEASE_DATE", "").strip()
     day = raw if raw else date.today().strftime("%Y%m%d")
+    if os.environ.get("RELEASE", "").strip().lower() in ("1", "true", "yes"):
+        return day
     return f"{day}-SNAPSHOT"
 
 
-SNAPSHOT_SUFFIX = _snapshot_suffix()
+VERSION_DATE_SUFFIX = version_date_suffix()
 
 ALIYUN_DM = """
     <distributionManagement>
@@ -81,7 +83,7 @@ def compiler_config(*, java_version: str, use_release: bool) -> str:
 
 
 def write_pom(*, boot_parent: str, java_version: str, version_prefix: str, use_release: bool) -> None:
-    ver = f"{version_prefix}.{SNAPSHOT_SUFFIX}"
+    ver = f"{version_prefix}.{VERSION_DATE_SUFFIX}"
     comp = compiler_config(java_version=java_version, use_release=use_release)
     body = f'''<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
