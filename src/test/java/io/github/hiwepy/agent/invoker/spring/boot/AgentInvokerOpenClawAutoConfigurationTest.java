@@ -1,7 +1,7 @@
 package io.github.hiwepy.agent.invoker.spring.boot;
 
-import io.github.hiwepy.agent.invoker.AiAgentInvokerRouter;
-import io.github.hiwepy.agent.invoker.openclaw.OpenClawAiAgentInvoker;
+import io.github.hiwepy.agent.invoker.AgentInvokerRouter;
+import io.github.hiwepy.agent.invoker.openclaw.OpenClawAgentInvoker;
 import io.github.hiwepy.openclaw.OpenClawClient;
 import io.github.hiwepy.openclaw.OpenClawClientConfig;
 import org.junit.jupiter.api.Test;
@@ -27,9 +27,9 @@ class AgentInvokerOpenClawAutoConfigurationTest {
     @Test
     void shouldRegisterOpenClawInvokerInRouter() {
         contextRunner.run(context -> {
-            assertThat(context).hasSingleBean(OpenClawAiAgentInvoker.class);
-            AiAgentInvokerRouter router = context.getBean(AiAgentInvokerRouter.class);
-            OpenClawAiAgentInvoker invoker = context.getBean(OpenClawAiAgentInvoker.class);
+            assertThat(context).hasSingleBean(OpenClawAgentInvoker.class);
+            AgentInvokerRouter router = context.getBean(AgentInvokerRouter.class);
+            OpenClawAgentInvoker invoker = context.getBean(OpenClawAgentInvoker.class);
             assertThat(router.getInvokers()).hasSize(1);
             assertThat(router.route("openclaw")).isSameAs(invoker);
         });
@@ -38,8 +38,8 @@ class AgentInvokerOpenClawAutoConfigurationTest {
     @Test
     void shouldRouteNullProviderToConfiguredDefault() {
         contextRunner.run(context -> {
-            AiAgentInvokerRouter router = context.getBean(AiAgentInvokerRouter.class);
-            OpenClawAiAgentInvoker invoker = context.getBean(OpenClawAiAgentInvoker.class);
+            AgentInvokerRouter router = context.getBean(AgentInvokerRouter.class);
+            OpenClawAgentInvoker invoker = context.getBean(OpenClawAgentInvoker.class);
             assertThat(router.getDefaultProvider()).isEqualTo("openclaw");
             assertThat(router.route((String) null)).isSameAs(invoker);
         });
@@ -48,7 +48,7 @@ class AgentInvokerOpenClawAutoConfigurationTest {
     @Test
     void shouldBridgeCallbackBaseUrlFromOpenClawProperties() {
         contextRunner.run(context -> {
-            OpenClawAiAgentInvoker invoker = context.getBean(OpenClawAiAgentInvoker.class);
+            OpenClawAgentInvoker invoker = context.getBean(OpenClawAgentInvoker.class);
             assertThat(invoker.getCallbackBaseUrl()).isEqualTo("http://callback.from-openclaw:8080");
         });
     }
