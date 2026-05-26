@@ -7,13 +7,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.1.0-M4</version>
         <relativePath/>
     </parent>
 
     <groupId>io.github.hiwepy</groupId>
     <artifactId>agent-invoker-spring-boot-starter</artifactId>
-    <version>4.0.x.20260527-SNAPSHOT</version>
+    <version>4.1.x.20260527-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Spring Boot starter for AI Agent Invoker — multi-provider AI agent invocation (line 4.0.x; JDK 17)</description>
