@@ -57,7 +57,7 @@ public class AgentInvokerAutoConfiguration {
      */
     @Configuration
     @ConditionalOnClass(OpenClawClient.class)
-    @AutoConfigureAfter(name = "com.github.hiwepy.openclaw.spring.boot.OpenClawAutoConfiguration")
+    @AutoConfigureAfter(name = "io.github.hiwepy.openclaw.spring.boot.OpenClawAutoConfiguration")
     @ConditionalOnProperty(prefix = AgentInvokerProperties.PREFIX + ".openclaw", name = "enabled", havingValue = "true", matchIfMissing = true)
     static class OpenClawInvokerConfiguration {
 
