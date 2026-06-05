@@ -21,6 +21,9 @@ public class AgentInvokerProperties {
     /** OpenClaw Provider 配置 */
     private final OpenClaw openclaw = new OpenClaw();
 
+    /** Hermes Provider 配置 */
+    private final Hermes hermes = new Hermes();
+
     public boolean isEnabled() { return enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
 
@@ -28,6 +31,8 @@ public class AgentInvokerProperties {
     public void setDefaultProvider(String defaultProvider) { this.defaultProvider = defaultProvider; }
 
     public OpenClaw getOpenclaw() { return openclaw; }
+
+    public Hermes getHermes() { return hermes; }
 
     /**
      * OpenClaw Provider 专属配置（{@code agents.provider.openclaw.*}）。
@@ -82,5 +87,34 @@ public class AgentInvokerProperties {
 
         public String getTransport() { return transport; }
         public void setTransport(String transport) { this.transport = transport; }
+    }
+
+    /**
+     * Hermes Provider 专属配置（{@code agents.provider.hermes.*}）。
+     *
+     * <p>Hermes 通过 {@code hermes-java-sdk} 提供 Run-based 异步任务执行。
+     * {@link io.github.hiwepy.hermes.HermesClient} 由 hermes-spring-boot-starter 装配。</p>
+     */
+    public static class Hermes {
+
+        /** 是否启用 Hermes adapter */
+        private boolean enabled = false;
+
+        /**
+         * 回调基础 URL；Hermes 通过轮询驱动回调，此 URL 用于 POST 回调结果。
+         */
+        private String callbackBaseUrl = "http://localhost:7088";
+
+        /** 默认 instructions（可被 variables["hermes.instructions"] 覆盖） */
+        private String defaultInstructions;
+
+        public boolean isEnabled() { return enabled; }
+        public void setEnabled(boolean enabled) { this.enabled = enabled; }
+
+        public String getCallbackBaseUrl() { return callbackBaseUrl; }
+        public void setCallbackBaseUrl(String callbackBaseUrl) { this.callbackBaseUrl = callbackBaseUrl; }
+
+        public String getDefaultInstructions() { return defaultInstructions; }
+        public void setDefaultInstructions(String defaultInstructions) { this.defaultInstructions = defaultInstructions; }
     }
 }
