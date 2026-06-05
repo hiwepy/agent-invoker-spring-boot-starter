@@ -1,9 +1,9 @@
 package io.github.hiwepy.agent.invoker.spring.boot;
 
-import io.github.hiwepy.agent.invoker.AiAgentInvokerRouter;
+import io.github.hiwepy.agent.invoker.AgentInvokerRouter;
 import io.github.hiwepy.agent.invoker.CallbackRouter;
 import io.github.hiwepy.agent.invoker.hermes.HermesAgentInvoker;
-import io.github.hiwepy.agent.invoker.openclaw.OpenClawAiAgentInvoker;
+import io.github.hiwepy.agent.invoker.openclaw.OpenClawAgentInvoker;
 import io.github.hiwepy.hermes.HermesClient;
 import io.github.hiwepy.openclaw.OpenClawClient;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -20,15 +20,15 @@ import org.springframework.core.env.Environment;
 /**
  * Agent Invoker 自动配置。
  *
- * <p>注册 {@link AiAgentInvokerRouter}、{@link CallbackRouter}，
- * 并在 OpenClaw 可用时条件装配 {@link OpenClawAiAgentInvoker}。</p>
+ * <p>注册 {@link AgentInvokerRouter}、{@link CallbackRouter}，
+ * 并在 OpenClaw 可用时条件装配 {@link OpenClawAgentInvoker}。</p>
  *
  * <p>配置说明：{@code openclaw.*}（openclaw-spring-boot-starter）负责 Gateway 客户端；
  * {@code agents.provider.*} 负责 invoker 路由与 adapter 行为。callback 基础 URL 可通过
  * {@link AgentInvokerOpenClawConfigBridge} 从 {@code openclaw.callback-base-url} 桥接。</p>
  */
 @Configuration
-@ConditionalOnClass(AiAgentInvokerRouter.class)
+@ConditionalOnClass(AgentInvokerRouter.class)
 @EnableConfigurationProperties(AgentInvokerProperties.class)
 @ConditionalOnProperty(prefix = AgentInvokerProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 @Import({AgentInvokerAutoConfiguration.OpenClawInvokerConfiguration.class,
@@ -40,8 +40,8 @@ public class AgentInvokerAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public AiAgentInvokerRouter aiAgentInvokerRouter(AgentInvokerProperties properties) {
-        AiAgentInvokerRouter router = new AiAgentInvokerRouter();
+    public AgentInvokerRouter aiAgentInvokerRouter(AgentInvokerProperties properties) {
+        AgentInvokerRouter router = new AgentInvokerRouter();
         router.setDefaultProvider(properties.getDefaultProvider());
         return router;
     }
@@ -51,7 +51,7 @@ public class AgentInvokerAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public CallbackRouter callbackRouter(AiAgentInvokerRouter invokerRouter) {
+    public CallbackRouter callbackRouter(AgentInvokerRouter invokerRouter) {
         return new CallbackRouter(invokerRouter);
     }
 
@@ -70,14 +70,14 @@ public class AgentInvokerAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
         @ConditionalOnBean(OpenClawClient.class)
-        public OpenClawAiAgentInvoker openClawAiAgentInvoker(
+        public OpenClawAgentInvoker openClawAiAgentInvoker(
                 OpenClawClient openClawClient,
                 AgentInvokerProperties properties,
                 Environment environment,
-                AiAgentInvokerRouter router) {
+                AgentInvokerRouter router) {
             String callbackBaseUrl = AgentInvokerOpenClawConfigBridge.resolveCallbackBaseUrl(
                     environment, properties);
-            OpenClawAiAgentInvoker invoker = new OpenClawAiAgentInvoker(openClawClient, callbackBaseUrl);
+            OpenClawAgentInvoker invoker = new OpenClawAgentInvoker(openClawClient, callbackBaseUrl);
             router.register(invoker);
             return invoker;
         }
@@ -98,12 +98,11 @@ public class AgentInvokerAutoConfiguration {
         public HermesAgentInvoker hermesAgentInvoker(
                 HermesClient hermesClient,
                 AgentInvokerProperties properties,
-                AiAgentInvokerRouter router) {
+                AgentInvokerRouter router) {
             AgentInvokerProperties.Hermes hermesProps = properties.getHermes();
             HermesAgentInvoker invoker = new HermesAgentInvoker(
                     hermesClient,
-                    hermesProps.getCallbackBaseUrl(),
-                    hermesProps.getDefaultInstructions());
+                    hermesProps.getCallbackBaseUrl());
             router.register(invoker);
             return invoker;
         }

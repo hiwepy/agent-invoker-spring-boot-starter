@@ -24,6 +24,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <agent-invoker-java-sdk.version>3.3.x.20260520-SNAPSHOT</agent-invoker-java-sdk.version>
         <openclaw-spring-boot-starter.version>3.3.x.20260520-SNAPSHOT</openclaw-spring-boot-starter.version>
+        <hermes-spring-boot-starter.version>3.3.x.20260605-SNAPSHOT</hermes-spring-boot-starter.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     </properties>
 
@@ -50,6 +51,12 @@
             <groupId>io.github.hiwepy</groupId>
             <artifactId>openclaw-spring-boot-starter</artifactId>
             <version>${openclaw-spring-boot-starter.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.github.hiwepy</groupId>
+            <artifactId>hermes-spring-boot-starter</artifactId>
+            <version>${hermes-spring-boot-starter.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
