@@ -2,13 +2,9 @@ package io.github.hiwepy.agent.invoker.spring.boot;
 
 import io.github.hiwepy.agent.invoker.AgentInvokerRouter;
 import io.github.hiwepy.agent.invoker.CallbackRouter;
-<<<<<<< HEAD
-import io.github.hiwepy.agent.invoker.openclaw.OpenClawAgentInvoker;
-=======
 import io.github.hiwepy.agent.invoker.hermes.HermesAgentInvoker;
-import io.github.hiwepy.agent.invoker.openclaw.OpenClawAiAgentInvoker;
+import io.github.hiwepy.agent.invoker.openclaw.OpenClawAgentInvoker;
 import io.github.hiwepy.hermes.HermesClient;
->>>>>>> 527d9e2 (feat: add hermes invoker configuration)
 import io.github.hiwepy.openclaw.OpenClawClient;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -40,11 +36,11 @@ import org.springframework.core.env.Environment;
 public class AgentInvokerAutoConfiguration {
 
     /**
-     * AI Agent 调用路由器 Bean。收集所有 AgentInvoker 实现，并应用 {@code agents.provider.default-provider}。
+     * AI Agent 调用路由器 Bean。收集所有 AiAgentInvoker 实现，并应用 {@code agents.provider.default-provider}。
      */
     @Bean
     @ConditionalOnMissingBean
-    public AgentInvokerRouter agentInvokerRouter(AgentInvokerProperties properties) {
+    public AgentInvokerRouter aiAgentInvokerRouter(AgentInvokerProperties properties) {
         AgentInvokerRouter router = new AgentInvokerRouter();
         router.setDefaultProvider(properties.getDefaultProvider());
         return router;
@@ -74,7 +70,7 @@ public class AgentInvokerAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
         @ConditionalOnBean(OpenClawClient.class)
-        public OpenClawAgentInvoker openClawAgentInvoker(
+        public OpenClawAgentInvoker openClawAiAgentInvoker(
                 OpenClawClient openClawClient,
                 AgentInvokerProperties properties,
                 Environment environment,
@@ -102,12 +98,11 @@ public class AgentInvokerAutoConfiguration {
         public HermesAgentInvoker hermesAgentInvoker(
                 HermesClient hermesClient,
                 AgentInvokerProperties properties,
-                AiAgentInvokerRouter router) {
+                AgentInvokerRouter router) {
             AgentInvokerProperties.Hermes hermesProps = properties.getHermes();
             HermesAgentInvoker invoker = new HermesAgentInvoker(
                     hermesClient,
-                    hermesProps.getCallbackBaseUrl(),
-                    hermesProps.getDefaultInstructions());
+                    hermesProps.getCallbackBaseUrl());
             router.register(invoker);
             return invoker;
         }
