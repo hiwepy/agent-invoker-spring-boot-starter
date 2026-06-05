@@ -1,0 +1,8 @@
+io/github/hiwepy/agent/invoker/spring/boot/AgentInvokerAutoConfiguration$HermesInvokerConfiguration.class
+io/github/hiwepy/agent/invoker/spring/boot/AgentInvokerAutoConfiguration$OpenClawInvokerConfiguration.class
+META-INF/spring-configuration-metadata.json
+io/github/hiwepy/agent/invoker/spring/boot/AgentInvokerAutoConfiguration.class
+io/github/hiwepy/agent/invoker/spring/boot/AgentInvokerOpenClawConfigBridge.class
+io/github/hiwepy/agent/invoker/spring/boot/AgentInvokerProperties$OpenClaw.class
+io/github/hiwepy/agent/invoker/spring/boot/AgentInvokerProperties$Hermes.class
+io/github/hiwepy/agent/invoker/spring/boot/AgentInvokerProperties.class
