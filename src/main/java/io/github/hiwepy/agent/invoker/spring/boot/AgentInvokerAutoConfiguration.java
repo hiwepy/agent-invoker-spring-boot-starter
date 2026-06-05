@@ -2,7 +2,13 @@ package io.github.hiwepy.agent.invoker.spring.boot;
 
 import io.github.hiwepy.agent.invoker.AgentInvokerRouter;
 import io.github.hiwepy.agent.invoker.CallbackRouter;
+<<<<<<< HEAD
 import io.github.hiwepy.agent.invoker.openclaw.OpenClawAgentInvoker;
+=======
+import io.github.hiwepy.agent.invoker.hermes.HermesAgentInvoker;
+import io.github.hiwepy.agent.invoker.openclaw.OpenClawAiAgentInvoker;
+import io.github.hiwepy.hermes.HermesClient;
+>>>>>>> 527d9e2 (feat: add hermes invoker configuration)
 import io.github.hiwepy.openclaw.OpenClawClient;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -29,7 +35,8 @@ import org.springframework.core.env.Environment;
 @ConditionalOnClass(AgentInvokerRouter.class)
 @EnableConfigurationProperties(AgentInvokerProperties.class)
 @ConditionalOnProperty(prefix = AgentInvokerProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
-@Import(AgentInvokerAutoConfiguration.OpenClawInvokerConfiguration.class)
+@Import({AgentInvokerAutoConfiguration.OpenClawInvokerConfiguration.class,
+         AgentInvokerAutoConfiguration.HermesInvokerConfiguration.class})
 public class AgentInvokerAutoConfiguration {
 
     /**
@@ -75,6 +82,32 @@ public class AgentInvokerAutoConfiguration {
             String callbackBaseUrl = AgentInvokerOpenClawConfigBridge.resolveCallbackBaseUrl(
                     environment, properties);
             OpenClawAgentInvoker invoker = new OpenClawAgentInvoker(openClawClient, callbackBaseUrl);
+            router.register(invoker);
+            return invoker;
+        }
+    }
+
+    /**
+     * Hermes adapter — 仅在 HermesClient 可用时装配。
+     */
+    @Configuration
+    @ConditionalOnClass(HermesClient.class)
+    @ConditionalOnBean(HermesClient.class)
+    @AutoConfigureAfter(name = "io.github.hiwepy.hermes.spring.boot.HermesAutoConfiguration")
+    @ConditionalOnProperty(prefix = AgentInvokerProperties.PREFIX + ".hermes", name = "enabled", havingValue = "true")
+    static class HermesInvokerConfiguration {
+
+        @Bean
+        @ConditionalOnMissingBean
+        public HermesAgentInvoker hermesAgentInvoker(
+                HermesClient hermesClient,
+                AgentInvokerProperties properties,
+                AiAgentInvokerRouter router) {
+            AgentInvokerProperties.Hermes hermesProps = properties.getHermes();
+            HermesAgentInvoker invoker = new HermesAgentInvoker(
+                    hermesClient,
+                    hermesProps.getCallbackBaseUrl(),
+                    hermesProps.getDefaultInstructions());
             router.register(invoker);
             return invoker;
         }
