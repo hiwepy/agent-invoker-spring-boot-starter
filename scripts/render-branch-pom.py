@@ -88,13 +88,13 @@ def write_pom(*, boot_parent: str, java_version: str, version_prefix: str, use_r
         <relativePath/>
     </parent>
 
-    <groupId>io.github.hiwepy</groupId>
+    <groupId>io.github.easy4j</groupId>
     <artifactId>agent-invoker-spring-boot-starter</artifactId>
     <version>{ver}</version>
     <packaging>jar</packaging>
     <name>${{project.groupId}}:${{project.artifactId}}</name>
     <description>Spring Boot starter for AI Agent Invoker — multi-provider AI agent invocation (line {version_prefix}; JDK {java_version})</description>
-    <url>https://github.com/hiwepy/${{project.artifactId}}</url>
+    <url>https://github.com/easy-4-java/${{project.artifactId}}</url>
 
     <properties>
         <java.version>{java_version}</java.version>
@@ -119,12 +119,12 @@ def write_pom(*, boot_parent: str, java_version: str, version_prefix: str, use_r
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.github.hiwepy</groupId>
+            <groupId>io.github.easy4j</groupId>
             <artifactId>agent-invoker-java-sdk</artifactId>
             <version>${{agent-invoker-java-sdk.version}}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.hiwepy</groupId>
+            <groupId>io.github.easy4j</groupId>
             <artifactId>openclaw-spring-boot-starter</artifactId>
             <version>${{openclaw-spring-boot-starter.version}}</version>
             <optional>true</optional>

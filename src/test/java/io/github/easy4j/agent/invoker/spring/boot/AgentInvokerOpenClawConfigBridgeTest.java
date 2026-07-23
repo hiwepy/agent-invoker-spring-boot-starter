@@ -1,4 +1,4 @@
-package io.github.hiwepy.agent.invoker.spring.boot;
+package io.github.easy4j.agent.invoker.spring.boot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.env.MockEnvironment;

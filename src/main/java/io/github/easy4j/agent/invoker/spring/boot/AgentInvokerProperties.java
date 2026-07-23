@@ -1,4 +1,4 @@
-package io.github.hiwepy.agent.invoker.spring.boot;
+package io.github.easy4j.agent.invoker.spring.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -38,7 +38,7 @@ public class AgentInvokerProperties {
      * OpenClaw Provider 专属配置（{@code agents.provider.openclaw.*}）。
      *
      * <p>Gateway 连接与 Hook 鉴权请配置 {@code openclaw.*}（由 openclaw-spring-boot-starter 装配
-     * {@link io.github.hiwepy.openclaw.OpenClawClient}）。本段 {@code gatewayBaseUrl} / {@code hooksToken}
+     * {@link io.github.easy4j.openclaw.OpenClawClient}）。本段 {@code gatewayBaseUrl} / {@code hooksToken}
      * 等字段保留用于文档与迁移，adapter 运行时以 {@code openclaw.*} 为准；{@code callbackBaseUrl}
      * 可通过 {@link AgentInvokerOpenClawConfigBridge} 从 {@code openclaw.callback-base-url} 桥接。</p>
      */
@@ -48,7 +48,7 @@ public class AgentInvokerProperties {
         private boolean enabled = true;
 
         /**
-         * OpenClaw Gateway 根地址（文档/迁移用；实际 {@link io.github.hiwepy.openclaw.OpenClawClient} 使用 {@code openclaw.gateway-base-url}）。
+         * OpenClaw Gateway 根地址（文档/迁移用；实际 {@link io.github.easy4j.openclaw.OpenClawClient} 使用 {@code openclaw.gateway-base-url}）。
          */
         private String gatewayBaseUrl = "http://localhost:18789";
 
@@ -93,7 +93,7 @@ public class AgentInvokerProperties {
      * Hermes Provider 专属配置（{@code agents.provider.hermes.*}）。
      *
      * <p>Hermes 通过 {@code hermes-java-sdk} 提供 Run-based 异步任务执行。
-     * {@link io.github.hiwepy.hermes.HermesClient} 由 hermes-spring-boot-starter 装配。</p>
+     * {@link io.github.easy4j.hermes.HermesClient} 由 hermes-spring-boot-starter 装配。</p>
      */
     public static class Hermes {
 

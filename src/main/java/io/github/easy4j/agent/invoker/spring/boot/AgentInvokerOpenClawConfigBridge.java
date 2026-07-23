@@ -1,4 +1,4 @@
-package io.github.hiwepy.agent.invoker.spring.boot;
+package io.github.easy4j.agent.invoker.spring.boot;
 
 import org.springframework.core.env.Environment;
 
@@ -6,7 +6,7 @@ import org.springframework.core.env.Environment;
  * 解析 agent-invoker 与 {@code openclaw-spring-boot-starter} 之间的配置桥接。
  *
  * <p>Gateway 连接与 Hook 鉴权以 {@code openclaw.*} 为准（由 openclaw-spring-boot-starter 装配
- * {@link io.github.hiwepy.openclaw.OpenClawClient}）。{@code agents.provider.openclaw.*} 仅覆盖
+ * {@link io.github.easy4j.openclaw.OpenClawClient}）。{@code agents.provider.openclaw.*} 仅覆盖
  * invoker adapter 行为；未显式设置时回退到 {@code openclaw.callback-base-url}。</p>
  */
 final class AgentInvokerOpenClawConfigBridge {

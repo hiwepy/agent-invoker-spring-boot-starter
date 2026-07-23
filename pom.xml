@@ -11,13 +11,13 @@
         <relativePath/>
     </parent>
 
-    <groupId>io.github.hiwepy</groupId>
+    <groupId>io.github.easy4j</groupId>
     <artifactId>agent-invoker-spring-boot-starter</artifactId>
     <version>3.3.x.20260520-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Spring Boot starter for AI Agent Invoker — multi-provider AI agent invocation (line 3.3.x; JDK 17)</description>
-    <url>https://github.com/hiwepy/${project.artifactId}</url>
+    <url>https://github.com/easy-4-java/${project.artifactId}</url>
 
     <properties>
         <java.version>17</java.version>
@@ -43,18 +43,18 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.github.hiwepy</groupId>
+            <groupId>io.github.easy4j</groupId>
             <artifactId>agent-invoker-java-sdk</artifactId>
             <version>${agent-invoker-java-sdk.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.hiwepy</groupId>
+            <groupId>io.github.easy4j</groupId>
             <artifactId>openclaw-spring-boot-starter</artifactId>
             <version>${openclaw-spring-boot-starter.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.github.hiwepy</groupId>
+            <groupId>io.github.easy4j</groupId>
             <artifactId>hermes-spring-boot-starter</artifactId>
             <version>${hermes-spring-boot-starter.version}</version>
             <optional>true</optional>

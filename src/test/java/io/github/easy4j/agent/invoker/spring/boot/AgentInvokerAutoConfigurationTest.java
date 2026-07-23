@@ -1,7 +1,7 @@
-package io.github.hiwepy.agent.invoker.spring.boot;
+package io.github.easy4j.agent.invoker.spring.boot;
 
-import io.github.hiwepy.agent.invoker.AiAgentInvokerRouter;
-import io.github.hiwepy.agent.invoker.CallbackRouter;
+import io.github.easy4j.agent.invoker.AiAgentInvokerRouter;
+import io.github.easy4j.agent.invoker.CallbackRouter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

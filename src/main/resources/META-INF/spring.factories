@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.github.hiwepy.agent.invoker.spring.boot.AgentInvokerAutoConfiguration
+io.github.easy4j.agent.invoker.spring.boot.AgentInvokerAutoConfiguration

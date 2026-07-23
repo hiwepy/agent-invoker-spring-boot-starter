@@ -1,9 +1,9 @@
-package io.github.hiwepy.agent.invoker.spring.boot;
+package io.github.easy4j.agent.invoker.spring.boot;
 
-import io.github.hiwepy.agent.invoker.AiAgentInvokerRouter;
-import io.github.hiwepy.agent.invoker.openclaw.OpenClawAiAgentInvoker;
-import io.github.hiwepy.openclaw.OpenClawClient;
-import io.github.hiwepy.openclaw.OpenClawClientConfig;
+import io.github.easy4j.agent.invoker.AiAgentInvokerRouter;
+import io.github.easy4j.agent.invoker.openclaw.OpenClawAiAgentInvoker;
+import io.github.easy4j.openclaw.OpenClawClient;
+import io.github.easy4j.openclaw.OpenClawClientConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;

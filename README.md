@@ -14,7 +14,7 @@ Spring Boot 自动配置模块，为 [agent-invoker-java-sdk](../agent-invoker-j
 
 ```xml
 <dependency>
-    <groupId>io.github.hiwepy</groupId>
+    <groupId>io.github.easy4j</groupId>
     <artifactId>agent-invoker-spring-boot-starter</artifactId>
     <version>3.3.x.20260520-SNAPSHOT</version>
 </dependency>
@@ -46,12 +46,12 @@ Spring Boot 自动配置模块，为 [agent-invoker-java-sdk](../agent-invoker-j
 ```xml
 <!-- OpenClaw Provider（默认） -->
 <dependency>
-    <groupId>io.github.hiwepy</groupId>
+    <groupId>io.github.easy4j</groupId>
     <artifactId>openclaw-spring-boot-starter</artifactId>
     <version>2.7.x.20260527-SNAPSHOT</version>
 </dependency>
 <dependency>
-    <groupId>io.github.hiwepy</groupId>
+    <groupId>io.github.easy4j</groupId>
     <artifactId>agent-invoker-spring-boot-starter</artifactId>
     <version>3.3.x.20260520-SNAPSHOT</version>
 </dependency>
